@@ -1,17 +1,17 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-const initialState = { pending: 0, completed: 0 };
+const initialState = { total: 0, completed: 0 };
 
 const todoSlice = createSlice({
   name: 'todo',
   initialState,
   reducers: {
     increase(state, action) {
-      state.pending = action.payload;
+      state.total = action.payload;
     },
 
     decrease(state, action) {
-      state.pending = action.payload;
+      state.total = action.payload;
     },
 
     isCompleted(state, action) {
@@ -20,6 +20,6 @@ const todoSlice = createSlice({
   },
 });
 
-export const { increase, decrease,isCompleted } = todoSlice.actions;
+export const { increase, decrease, isCompleted } = todoSlice.actions;
 
 export default todoSlice.reducer;

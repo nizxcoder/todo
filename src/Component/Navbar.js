@@ -14,8 +14,9 @@ export default function Navbar() {
             <span>
               <b>
                 {' '}
-                TODO: Pending: {todoCounter.pending} | Completed:{' '}
-                {todoCounter.completed}
+                TODO: Total: {todoCounter.total} | Completed:{' '}
+                {todoCounter.completed} | Pending:{' '}
+                {todoCounter.total - todoCounter.completed}
               </b>
             </span>
           </div>

@@ -2,10 +2,11 @@ import React, { useEffect, useState } from 'react';
 import '../CSS/TodoContainer.css';
 import Todo from './Todo';
 import { useDispatch } from 'react-redux';
-import { decrease, increase } from '../store/todoSlice';
+import { decrease, increase, isCompleted } from '../store/todoSlice';
 
 export default function TodoContainer() {
   const [todos, setTodos] = useState([]);
+  const [completed, setCompleted] = useState(0);
   const [inputValue, setInputValue] = useState('');
   const [todoCounter, setTodoCounter] = useState(0);
   const dispatch = useDispatch();
@@ -17,7 +18,7 @@ export default function TodoContainer() {
       dispatch(increase(oldTodos.length));
       setTodoCounter(oldTodos.length);
     }
-  }, []);
+  }, [dispatch]);
 
   const handleChange = (event) => {
     setInputValue(event.target.value);
@@ -52,6 +53,16 @@ export default function TodoContainer() {
     dispatch(decrease(todoCounter - 1));
     localStorage.setItem('todos', JSON.stringify(updatedTodos));
   };
+
+  const handleDone = (id) => {
+    const isDone = window.confirm('Is it completed?');
+    if (isDone) {
+      let btn = document.getElementsByClassName('is-done')[id];
+      btn.classList.replace('btn-warning', 'btn-success');
+      setCompleted(() => completed + 1);
+      dispatch(isCompleted(completed + 1));
+    }
+  };
   return (
     <div className="container todo-box">
       <h1>TODO LIST</h1>
@@ -66,6 +77,7 @@ export default function TodoContainer() {
               todo_text={e.inputValue}
               time={e.time}
               deleteTodo={handleDelete}
+              handleDone={handleDone}
             />
           ))
         )}
